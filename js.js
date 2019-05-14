@@ -1,4 +1,4 @@
-// import showWinner(), postRequest() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+// import showWinner(), postRequest(), restart() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 
 // Массив, содержащий все значения на доске. 
 // Здесь и далее: 1 - пусто, 2 - 'Х', 3 - 'О'
@@ -18,6 +18,8 @@ function turn(pole) {
         sign === 2 ? button.innerHTML = "X" : button.innerHTML = "O";
 
         checkForWinning(sign);
+
+        checkForStandoff();
     }
 }
 
@@ -37,10 +39,12 @@ function opponentTurn(number) {
     sign === 2 ? button.innerHTML = "X" : button.innerHTML = "O";
 
     checkForWinning(sign);
+
+    checkForStandoff();
 }
 
 // Служебная функция для определения того, чей сейчас ход. 
-// Пробегает по массиву и считает количество измененных ячеек. Если число нечетное - крестики (2), четное - нолики (3).
+// Пробегает по массиву и считает номер ход (количество измененных ячеек+1). Если число нечетное - крестики (2), четное - нолики (3).
 function getSign() {
     const turnCount = 1 + board.reduce((sum, currentValue) => {
         if (currentValue !== 1) {
@@ -118,6 +122,14 @@ function checkForWinning(sign) {
     Ну собственно даже в случае двумерного массива джаваскриптовыми методами типа every тут все равно нормально не проверишь, 
     все равно нужен цикл в цикле.
     */
+}
+
+// Проверка на ничью. Если массив не содержит пустых полей (1), то уйдем в restart()
+function checkForStandoff(){
+    if (!board.includes(1)){
+        alert("Ничья! Нажмите 'ОК' чтобы начать заново");
+        restart();
+    }
 }
 
 export {
